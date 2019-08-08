@@ -143,7 +143,9 @@ while read line; do
         chown $USER_NAME:$USER_NAME /home/$USER_NAME/.ssh/authorized_keys
       fi
     fi
-
+    
+  else
+    echo "Username $USER_NAME did not pass alphanumeric restriction and includes unsupported characters" >> $LOG_FILE
   fi
 done < ~/keys_retrieved_from_s3
 
