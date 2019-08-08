@@ -4,6 +4,7 @@ data "template_file" "user_data" {
   vars {
     aws_region  = "${var.region}"
     bucket_name = "${var.bucket_name}"
+    public_ssh_port = "${var.public_ssh_port}"
   }
 }
 
@@ -187,7 +188,7 @@ resource "aws_lb" "bastion_lb" {
 
 resource "aws_lb_target_group" "bastion_lb_target_group" {
   name        = "${local.name_prefix}-lb-target"
-  port        = "22"
+  port        = "${var.public_ssh_port}"
   protocol    = "TCP"
   vpc_id      = "${var.vpc_id}"
   target_type = "instance"

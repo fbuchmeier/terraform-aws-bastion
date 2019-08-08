@@ -20,6 +20,9 @@ echo -e "\\nForceCommand /usr/bin/bastion/shell" >> /etc/ssh/sshd_config
 awk '!/X11Forwarding/' /etc/ssh/sshd_config > temp && mv temp /etc/ssh/sshd_config
 echo "X11Forwarding no" >> /etc/ssh/sshd_config
 
+# Update SSHD listening port
+sed -i "s/#Port 22/Port ${public_ssh_port}/" /etc/ssh/sshd_config
+
 mkdir /usr/bin/bastion
 
 cat > /usr/bin/bastion/shell << 'EOF'
