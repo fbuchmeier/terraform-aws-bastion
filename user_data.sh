@@ -149,7 +149,7 @@ while read line; do
     fi
 
   else
-    echo "Username $USER_NAME did not pass alphanumeric restriction and includes unsupported characters" >> $LOG_FILE
+    echo "`date --date="today" "+%Y-%m-%d %H-%M-%S"`: Username $USER_NAME did not pass alphanumeric restriction and includes unsupported characters" >> $LOG_FILE
   fi
 done < ~/keys_retrieved_from_s3
 
