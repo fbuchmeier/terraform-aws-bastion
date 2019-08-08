@@ -164,14 +164,18 @@ EOF
 
 chmod 700 /usr/bin/bastion/sync_users
 
+# RUN INITIAL USER AND LOG SYNC
+/usr/bin/bastion/sync_users
+/usr/bin/bastion/sync_s3
+
 ###########################################
 ## SCHEDULE SCRIPTS AND SECURITY UPDATES ##
 ###########################################
 
 cat > ~/mycron << EOF
 * * * * * /usr/bin/bastion/sync_s3
-* * * * * /usr/bin/bastion/sync_users > $LOG_DIR/sync_users.log
-0 0 * * * yum -y update --security > $LOG_DIR/yum_update.log
+* * * * * /usr/bin/bastion/sync_users >> $LOG_DIR/sync_users.log
+0 0 * * * yum -y update --security >> $LOG_DIR/yum_update.log
 0 3 * * * reboot
 EOF
 crontab ~/mycron
