@@ -88,8 +88,7 @@ cat > /usr/bin/bastion/sync_s3 << 'EOF'
 # Copy log files to S3 with server-side encryption enabled.
 # Then, if successful, delete log files that are older than a day.
 LOG_DIR="/var/log/bastion/"
-aws s3 sync $LOG_DIR s3://${bucket_name}/logs/bastion --sse --region ${aws_region} && find $LOG_DIR* -mtime +1 -exec rm {} \;
-aws s3 sync /var/log s3://${bucket_name}/logs/ --sse --region ${aws_region}
+aws s3 sync /var/log s3://${bucket_name}/logs/ --sse --region ${aws_region} && find $LOG_DIR* -mtime +1 -exec rm {} \;
 
 EOF
 
@@ -143,7 +142,7 @@ while read line; do
         chown $USER_NAME:$USER_NAME /home/$USER_NAME/.ssh/authorized_keys
       fi
     fi
-    
+
   else
     echo "Username $USER_NAME did not pass alphanumeric restriction and includes unsupported characters" >> $LOG_FILE
   fi
