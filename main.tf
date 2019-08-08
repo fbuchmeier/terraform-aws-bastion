@@ -187,7 +187,7 @@ resource "aws_lb" "bastion_lb" {
 
 resource "aws_lb_target_group" "bastion_lb_target_group" {
   name        = "${local.name_prefix}-lb-target"
-  port        = "${var.public_ssh_port}"
+  port        = "22"
   protocol    = "TCP"
   vpc_id      = "${var.vpc_id}"
   target_type = "instance"
