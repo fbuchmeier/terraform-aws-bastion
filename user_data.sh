@@ -120,6 +120,11 @@ aws s3api list-objects --bucket ${bucket_name} --prefix public-keys/ --region ${
 while read line; do
   USER_NAME="`get_user_name "$line"`"
 
+  # Skip README.txt
+  if [[ "$USER_NAME" == "README.txt"]]; then
+    continue
+  fi
+
   # Make sure the user name is alphanumeric
   if [[ "$USER_NAME" =~ ^[a-z][-a-z0-9]*$ ]]; then
 
