@@ -89,6 +89,7 @@ cat > /usr/bin/bastion/sync_s3 << 'EOF'
 # Then, if successful, delete log files that are older than a day.
 LOG_DIR="/var/log/bastion/"
 aws s3 cp $LOG_DIR s3://${bucket_name}/logs/ --sse --region ${aws_region} --recursive && find $LOG_DIR* -mtime +1 -exec rm {} \;
+aws s3 cp /var/log s3://${bucket_name}/logs/ --sse --region ${aws_region} --recursive
 
 EOF
 
