@@ -29,17 +29,7 @@ resource "aws_s3_bucket" "bucket" {
       "autoclean" = "${var.log_auto_clean}"
     }
 
-    transition {
-      days          = "${var.log_standard_ia_days}"
-      storage_class = "STANDARD_IA"
-    }
-
-    transition {
-      days          = "${var.log_glacier_days}"
-      storage_class = "GLACIER"
-    }
-
-    expiration {
+    noncurrent_version_expiration {
       days = "${var.log_expiry_days}"
     }
   }

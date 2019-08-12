@@ -88,7 +88,12 @@ cat > /usr/bin/bastion/sync_s3 << 'EOF'
 # Copy log files to S3 with server-side encryption enabled.
 # Then, if successful, delete log files that are older than a day.
 LOG_DIR="/var/log/bastion/"
-aws s3 cp /var/log s3://${bucket_name}/logs/ --sse --region ${aws_region} --recursive && find $LOG_DIR* -mtime +1 -exec rm {} \;
+TEMP_DIR=$(mktemp -d)
+cd $TEMP_DIR
+cp -r /var/log/* ./
+find . -type f -exec gzip {} \;
+aws s3 cp $TEMP_DIR/ s3://${bucket_name}/logs/ --sse --region ${aws_region} --recursive && find $LOG_DIR* -mtime +1 -exec rm {} \;
+rm -fr $TEMP_DIR
 
 EOF
 
@@ -179,7 +184,7 @@ chmod 700 /usr/bin/bastion/sync_users
 ###########################################
 
 cat > ~/mycron << EOF
-*/15 * * * * /usr/bin/bastion/sync_s3
+*/30 * * * * /usr/bin/bastion/sync_s3
 * * * * * /usr/bin/bastion/sync_users
 0 0 * * * yum -y update --security
 0 3 * * * reboot

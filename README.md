@@ -73,9 +73,7 @@ module "bastion" {
 | hosted_zone_name | Name of the hosted zone were we'll register the bastion DNS name | string | `` | no |
 | is_lb_private | If TRUE the load balancer scheme will be "internal" else "internet-facing" | string | - | yes |
 | log_auto_clean | Enable or not the lifecycle | string | `false` | no |
-| log_expiry_days | Number of days before logs expiration | string | `90` | no |
-| log_glacier_days | Number of days before moving logs to Glacier | string | `60` | no |
-| log_standard_ia_days | Number of days before moving logs to IA Storage | string | `30` | no |
+| log_expiry_days | Number of days before old logs expire, current logs are always retained | string | `90` | no |
 | public_ssh_port | Set the SSH port to use from desktop to the bastion | string | `22` | no |
 | region |  | string | - | yes |
 | tags | A mapping of tags to assign | map | `<map>` | no |
