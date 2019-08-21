@@ -24,11 +24,6 @@ resource "aws_s3_bucket" "bucket" {
 
     prefix = "logs/"
 
-    tags {
-      "rule"      = "log"
-      "autoclean" = "${var.log_auto_clean}"
-    }
-
     noncurrent_version_expiration {
       days = "${var.log_expiry_days}"
     }
